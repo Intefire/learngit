@@ -1,0 +1,79 @@
+
+
+git init   
+git add  xxx.xxx
+git commint -m "add some information"
+git status
+git diff
+git log
+git log --pretty=oneline
+git reset --hard HEAD^/HEAD^^HEAD^^^/HEAD~100
+git reset --hard 2b9d6-版本号
+git reflog  记录每一次的命令
+git restore --staged <file>..." to unstage)
+git checkout -- file可以丢弃工作区的修改
+git rm   xxx.xxx
+git remote add origin git@github.com:firesky120/learngit  关联远程仓库
+git remote rm origin  删除关联到本地的远程仓库
+git push -u origin master 推送当前仓库到远程仓库
+ssh-keygen -t rsa -C "1203092348@qq.com"    生成本机的安全密钥
+git push origin master 提交新的内容到远程仓库
+git clone   复制远程仓库到本地
+git checkout -b dev   创建分支
+git branch   -d dev   删除分支
+git switch -c dev    创建并切换到新的dev分支
+git branch   查看当前分支：
+git merge    用于合并指定分支到当前分支
+git log --graph --pretty=oneline --abbrev-commit   查看合并后的分支情况
+git stash 可以把当前工作现场“储藏”起来，等以后恢复现场后继续工作
+git stash apply恢复，但是恢复后，stash内容并不删除，你需要用git stash drop来删除；
+git stash pop，恢复的同时把stash内容也删了：
+git branch -D feature-vulcan  强行删除分支
+git remote 查看远程库的信息
+git rebase rebase操作可以把本地未push的分叉提交历史整理成直线
+git tag v1.0 打标签
+git show <tagname>可以看到说明文字
+git tag -d v0.1  删除标签
+git push origin <tagname>可以推送一个本地标签；
+git push origin --tags可以推送全部未推送过的本地标签；
+git tag -d <tagname>可以删除一个本地标签；
+git push origin :refs/tags/<tagname>可以删除一个远程标签。
+git config --global color.ui true  配置显示颜色
+在Git工作区的根目录下创建一个特殊的.gitignore文件，然后把要忽略的文件名填进去
+
+搭建Git服务器
+第一步，安装git：
+
+$ sudo apt-get install git
+第二步，创建一个git用户，用来运行git服务：
+
+$ sudo adduser git
+第三步，创建证书登录：
+
+收集所有需要登录的用户的公钥，就是他们自己的id_rsa.pub文件，把所有公钥导入到/home/git/.ssh/authorized_keys文件里，一行一个。
+
+第四步，初始化Git仓库：
+
+先选定一个目录作为Git仓库，假定是/srv/sample.git，在/srv目录下输入命令：
+
+$ sudo git init --bare sample.git
+Git就会创建一个裸仓库，裸仓库没有工作区，因为服务器上的Git仓库纯粹是为了共享，所以不让用户直接登录到服务器上去改工作区，并且服务器上的Git仓库通常都以.git结尾。然后，把owner改为git：
+
+$ sudo chown -R git:git sample.git
+第五步，禁用shell登录：
+
+出于安全考虑，第二步创建的git用户不允许登录shell，这可以通过编辑/etc/passwd文件完成。找到类似下面的一行：
+
+git:x:1001:1001:,,,:/home/git:/bin/bash
+改为：
+
+git:x:1001:1001:,,,:/home/git:/usr/bin/git-shell
+这样，git用户可以正常通过ssh使用git，但无法登录shell，因为我们为git用户指定的git-shell每次一登录就自动退出。
+
+第六步，克隆远程仓库：
+
+现在，可以通过git clone命令克隆远程仓库了，在各自的电脑上运行：
+
+$ git clone git@server:/srv/sample.git
+Cloning into 'sample'...
+warning: You appear to have cloned an empty repository.
