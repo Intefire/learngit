@@ -34,4 +34,9 @@ $ git remote add origin git@github.com:firesky120/learngit  关联远程仓库
   ssh-keygen -t rsa -C "1203092348@qq.com"
   git push origin master 提交新的内容到远程仓库
   Creating a new branch is quick.
+  Creating a new branch is quick AND simple.
+<<<<<<< HEAD
 Creating a new branch is quick & simple.
+=======
+  Creating a new branch is quick AND simple.
+>>>>>>> featurel
